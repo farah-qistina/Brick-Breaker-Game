@@ -127,7 +127,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         heartLabel = new Label("Heart : " + heart);
         heartLabel.setTranslateX(sceneWidth - 70);
         if (loadFromSave == false) {
-            root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel, newGame);
+            root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel, load, newGame);
         } else {
             root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel);
         }
@@ -349,7 +349,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             if (!isGoldStauts) {
                 //TODO gameover
                 heart--;
-                new Score().show(sceneWidth / 2, sceneHeigt / 2, -1, this);
+                new Score().show((double) sceneWidth / 2, sceneHeigt / 2, -1, this);
 
                 if (heart == 0) {
                     new Score().showGameOver(this);
@@ -661,7 +661,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     block.rect.setVisible(false);
                     block.isDestroyed = true;
                     destroyedBlockCount++;
-                    //System.out.println("size is " + blocks.size());
+                    System.out.println("size is " + blocks.size()); //uncommented
                     resetColideFlags();
 
                     if (block.type == Block.BLOCK_CHOCO) {
