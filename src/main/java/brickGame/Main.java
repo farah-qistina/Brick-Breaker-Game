@@ -28,17 +28,17 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     //Game settings
     private int level = 0;
 
-    //Breaker position
-    //Left side of the breaker
-    private double xBreak = 0.0f;
-    //Top of the breaker, 640 units from the top of the game window
-    private double yBreak = 640.0f;
-    private double centerBreakX;
+    //Paddle position
+    //Left side of the paddle
+    private double xPaddle = 0.0f;
+    //Top of the paddle, 640 units from the top of the game window
+    private double yPaddle = 640.0f;
+    private double centerPaddleX;
 
-    //Breaker dimensions
-    private final int breakWidth     = 130;
-    private final int breakHeight    = 30;
-    private final int halfBreakWidth = breakWidth / 2;
+    //Paddle dimensions
+    private final int paddleWidth     = 130;
+    private final int paddleHeight    = 30;
+    private final int halfPaddleWidth = paddleWidth / 2;
 
     //Scene dimensions in pixels
     private final int sceneWidth = 500;
@@ -78,7 +78,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     //Game elements
     private final ArrayList<Block> blocks = new ArrayList<Block>();
-    private final ArrayList<Bonus> chocos = new ArrayList<Bonus>();
+    private final ArrayList<Bonus> bonuses = new ArrayList<Bonus>();
     private final Color[]          colors = new Color[]{
             Color.MAGENTA,
             Color.RED,
@@ -129,7 +129,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
             //Initializing game elements
             initBall();
-            initBreak();
+            initPaddle();
             initBoard();
 
             //Creating buttons for loading and starting a new game
@@ -279,41 +279,41 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
     }
 
-    //Move the breaker based on the direction parameter
+    //Move the paddle based on the direction parameter
     private void move(final int direction) {
         //Separate thread to avoid blocking the JavaFX application's main thread
         new Thread(new Runnable() {
             @Override
             public void run() {
                 //Duration for which the thread sleeps between each movement step
-                int sleepTime = 4;
-                //Controls the number of movement steps the breaker takes, iterates 30 times
+                int initialSleepTime = 4;
+                //Controls the number of movement steps the paddle takes, iterates 30 times
                 for (int i = 0; i < 30; i++) {
-                    //Checks if the breaker has reached the right edge of the game area and direction is right, method returns to prevent movement
-                    if (xBreak == (sceneWidth - breakWidth) && direction == RIGHT) {
+                    //Checks if the paddle has reached the right edge of the game area and direction is right, method returns to prevent movement
+                    if (xPaddle == (sceneWidth - paddleWidth) && direction == RIGHT) {
                         return;
                     }
                     //"" left edge
-                    if (xBreak == 0 && direction == LEFT) {
+                    if (xPaddle == 0 && direction == LEFT) {
                         return;
                     }
-                    //Updates the X-coordinate of the breaker based on the direction
+                    //Updates the X-coordinate of the paddle based on the direction
                     if (direction == RIGHT) {
-                        xBreak++;
+                        xPaddle++;
                     } else {
-                        xBreak--;
+                        xPaddle--;
                     }
-                    //Updates the center of breaker based on its new position
-                    centerBreakX = xBreak + halfBreakWidth;
+                    //Updates the center of paddle based on its new position
+                    centerPaddleX = xPaddle + halfPaddleWidth;
                     //Introduces a sleep to slow down the movement making it visible and controlled
                     try {
-                        Thread.sleep(sleepTime);
+                        Thread.sleep(initialSleepTime);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     //After 20 iterations, sleep time gradually increases and makes the paddle move faster
                     if (i >= 20) {
-                        sleepTime = i;
+                        initialSleepTime = i;
                     }
                 }
             }
@@ -332,13 +332,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         ball.setFill(new ImagePattern(new Image("ball.png")));
     }
 
-    //Initialize the breaker
-    private void initBreak() {
+    //Initialize the paddle
+    private void initPaddle() {
         rect = new Rectangle();
-        rect.setWidth(breakWidth);
-        rect.setHeight(breakHeight);
-        rect.setX(xBreak);
-        rect.setY(yBreak);
+        rect.setWidth(paddleWidth);
+        rect.setHeight(paddleHeight);
+        rect.setX(xPaddle);
+        rect.setY(yPaddle);
 
         //TODO combine
         ImagePattern pattern = new ImagePattern(new Image("block.jpg"));
@@ -349,10 +349,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     //should the ball move down and right
     private boolean goDownBall                  = true;
     private boolean goRightBall                 = true;
-    //whether the ball has collided with the break
-    private boolean collideToBreak               = false;
-    //whether the ball should move to the right after colliding with the break
-    private boolean collideToBreakAndMoveToRight = true;
+    //whether the ball has collided with the paddle
+    private boolean collideToPaddle               = false;
+    //whether the ball should move to the right after colliding with the paddle
+    private boolean collideToPaddleAndMoveToRight = true;
     private boolean collideToRightWall           = false;
     private boolean collideToLeftWall            = false;
     private boolean collideToRightBlock          = false;
@@ -369,8 +369,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     //helps prevent unintended or persistent effects from previous collisions that could affect the ball's behavior incorrectly
     private void resetCollideFlags() {
 
-        collideToBreak = false;
-        collideToBreakAndMoveToRight = false;
+        collideToPaddle = false;
+        collideToPaddleAndMoveToRight = false;
         collideToRightWall = false;
         collideToLeftWall = false;
 
@@ -424,18 +424,18 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
         //Handle collision with the paddle
         //Checks if the ball is on or below the paddle
-        if (yBall >= yBreak - ballRadius) {
+        if (yBall >= yPaddle - ballRadius) {
             //System.out.println("Collide1");
             //Checks if the ball is on the paddle or not
-            if (xBall >= xBreak && xBall <= xBreak + breakWidth) {
+            if (xBall >= xPaddle && xBall <= xPaddle + paddleWidth) {
                 //TODO arrange reset efficiently
                 resetCollideFlags();
-                collideToBreak = true;
+                collideToPaddle = true;
                 goDownBall = false;
 
                 //Adjust velocity based on the position of the collision on the paddle
                 //calculates the position of the ball with respect to the centre of the paddle
-                double relation = (xBall - centerBreakX) / (breakWidth / 2);
+                double relation = (xBall - centerPaddleX) / (paddleWidth / 2);
 
                 //if the ball is near the centre of the paddle
                 if (Math.abs(relation) <= 0.3) {
@@ -451,7 +451,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 }
 
                 //determines whether the ball should move to the right relative to the centre
-                collideToBreakAndMoveToRight = xBall - centerBreakX > 0;
+                collideToPaddleAndMoveToRight = xBall - centerPaddleX > 0;
                 //System.out.println("Collide2");
             }
         }
@@ -468,9 +468,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
 
         //TODO integrate into if-else above
-        //Handle breaker collision
-        if (collideToBreak) {
-            goRightBall = collideToBreakAndMoveToRight;
+        //Handle paddle collision
+        if (collideToPaddle) {
+            goRightBall = collideToPaddleAndMoveToRight;
         }
 
         //Wall Collide
@@ -534,9 +534,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
                     outputStream.writeDouble(xBall);
                     outputStream.writeDouble(yBall);
-                    outputStream.writeDouble(xBreak);
-                    outputStream.writeDouble(yBreak);
-                    outputStream.writeDouble(centerBreakX);
+                    outputStream.writeDouble(xPaddle);
+                    outputStream.writeDouble(yPaddle);
+                    outputStream.writeDouble(centerPaddleX);
                     outputStream.writeLong(time);
                     outputStream.writeLong(goldTime);
                     outputStream.writeDouble(vX);
@@ -546,8 +546,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     outputStream.writeBoolean(isGoldStatus);
                     outputStream.writeBoolean(goDownBall);
                     outputStream.writeBoolean(goRightBall);
-                    outputStream.writeBoolean(collideToBreak);
-                    outputStream.writeBoolean(collideToBreakAndMoveToRight);
+                    outputStream.writeBoolean(collideToPaddle);
+                    outputStream.writeBoolean(collideToPaddleAndMoveToRight);
                     outputStream.writeBoolean(collideToRightWall);
                     outputStream.writeBoolean(collideToLeftWall);
                     outputStream.writeBoolean(collideToRightBlock);
@@ -603,8 +603,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         isGoldStatus = loadSave.isGoldStatus;
         goDownBall = loadSave.goDownBall;
         goRightBall = loadSave.goRightBall;
-        collideToBreak = loadSave.collideToBreak;
-        collideToBreakAndMoveToRight = loadSave.collideToBreakAndMoveToRight;
+        collideToPaddle = loadSave.collideToPaddle;
+        collideToPaddleAndMoveToRight = loadSave.collideToPaddleAndMoveToRight;
         collideToRightWall = loadSave.collideToRightWall;
         collideToLeftWall = loadSave.collideToLeftWall;
         collideToRightBlock = loadSave.collideToRightBlock;
@@ -617,16 +617,16 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         destroyedBlockCount = loadSave.destroyedBlockCount;
         xBall = loadSave.xBall;
         yBall = loadSave.yBall;
-        xBreak = loadSave.xBreak;
-        yBreak = loadSave.yBreak;
-        centerBreakX = loadSave.centerBreakX;
+        xPaddle = loadSave.xPaddle;
+        yPaddle = loadSave.yPaddle;
+        centerPaddleX = loadSave.centerPaddleX;
         time = loadSave.time;
         goldTime = loadSave.goldTime;
         vX = loadSave.vX;
 
-        //clear existing blocks and chocos
+        //clear existing blocks and bonuses
         blocks.clear();
-        chocos.clear();
+        bonuses.clear();
 
         //create block objects based on the serialized data
         for (BlockSerializable ser : loadSave.blocks) {
@@ -634,7 +634,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             //generate a random number to determine the color
             int r = new Random().nextInt(200);
             //create a new block and add it to the blocks list
-            blocks.add(new Block(ser.row, ser.j, colors[r % colors.length], ser.type));
+            blocks.add(new Block(ser.row, ser.column, colors[r % colors.length], ser.type));
         }
 
         try {
@@ -667,9 +667,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     time = 0;
                     goldTime = 0;
 
-                    //clear list of blocks and choco
+                    //clear list of blocks and bonuses
                     blocks.clear();
-                    chocos.clear();
+                    bonuses.clear();
                     destroyedBlockCount = 0;
                     //start a new game by calling the start method with the primaryStage
                     start(primaryStage);
@@ -701,7 +701,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             goldTime = 0;
 
             blocks.clear();
-            chocos.clear();
+            bonuses.clear();
 
             start(primaryStage);
         } catch (Exception e) {
@@ -719,15 +719,15 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 scoreLabel.setText("Score: " + score);
                 heartLabel.setText("Heart : " + heart);
 
-                rect.setX(xBreak);
-                rect.setY(yBreak);
+                rect.setX(xPaddle);
+                rect.setY(yPaddle);
                 //Sets the visual position of the ball based on the current values of x and y Ball
                 ball.setCenterX(xBall);
                 ball.setCenterY(yBall);
 
-                //Updates the Y-coordinate of each bonus object in the chocos list
-                for (Bonus choco : chocos) {
-                    choco.choco.setY(choco.y);
+                //Updates the Y-coordinate of each bonus object in the bonuses list
+                for (Bonus bonus : bonuses) {
+                    bonus.bonus.setY(bonus.y);
                 }
             }
         });
@@ -754,19 +754,19 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     //Additional reactions based on block type
 
                     if (block.type == Block.BLOCK_CHOCO) {
-                        //Creates a new bonus object choco
-                        final Bonus choco = new Bonus(block.row, block.column);
+                        //Creates a new bonus object bonus
+                        final Bonus bonus = new Bonus(block.row, block.column);
                         //Set its creation time
-                        choco.timeCreated = time;
+                        bonus.timeCreated = time;
                         //Adds its graphical presentation to the root JavaFX container
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
-                                root.getChildren().add(choco.choco);
+                                root.getChildren().add(bonus.bonus);
                             }
                         });
-                        //Bonus objects added to the chocos list
-                        chocos.add(choco);
+                        //Bonus objects added to the bonuses list
+                        bonuses.add(bonus);
                     }
 
                     if (block.type == Block.BLOCK_STAR) {
@@ -795,7 +795,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
                 }
                 //TODO hit to break and some work here...
-                //System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");
+                //System.out.println("Paddle in row:" + block.row + " and column:" + block.column + " hit");
             }
         }
     }
@@ -820,23 +820,23 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             isGoldStatus = false;
         }
 
-        //Iterates through the chocos list
-        for (Bonus choco : chocos) {
-            //If the Y-coordinate of the choco is greater than the sceneHeight or if choco is taken
-            if (choco.y > sceneHeight || choco.taken) {
+        //Iterates through the bonuses list
+        for (Bonus bonus : bonuses) {
+            //If the Y-coordinate of the bonus is greater than the sceneHeight or if bonus is taken
+            if (bonus.y > sceneHeight || bonus.taken) {
                 continue;
             }
-            //If the choco is within the vertical and horizontal range of the paddle
-            if (choco.y >= yBreak && choco.y <= yBreak + breakHeight && choco.x >= xBreak && choco.x <= xBreak + breakWidth) {
+            //If the bonus is within the vertical and horizontal range of the paddle
+            if (bonus.y >= yPaddle && bonus.y <= yPaddle + paddleHeight && bonus.x >= xPaddle && bonus.x <= xPaddle + paddleWidth) {
                 System.out.println("You Got it and +3 score for you");
-                choco.taken = true;
-                choco.choco.setVisible(false);
+                bonus.taken = true;
+                bonus.bonus.setVisible(false);
                 score += 3;
-                new Score().show(choco.x, choco.y, 3, this);
+                new Score().show(bonus.x, bonus.y, 3, this);
             }
-            //Updates the Y-coordinate of the 'choco' based on the elapsed time since its creation
-            //choco is "falling"
-            choco.y += ((time - choco.timeCreated) / 1000.000) + 1.000;
+            //Updates the Y-coordinate of the 'bonus' based on the elapsed time since its creation
+            //bonus is "falling"
+            bonus.y += ((time - bonus.timeCreated) / 1000.000) + 1.000;
         }
 
         //System.out.println("time is:" + time + " goldTime is " + goldTime);

@@ -31,7 +31,7 @@ public class Block implements Serializable {
     //padding from the top of the window to the top of the first row of blocks
     private int paddingTop = height * 2;
     //padding to the left of the blocks
-    private int paddingH = 50;
+    private int paddingLeft = 50;
     public Rectangle rect;
 
     //hit codes
@@ -59,7 +59,7 @@ public class Block implements Serializable {
     }
 
     private void draw() {
-        x = (column * width) + paddingH;
+        x = (column * width) + paddingLeft;
         y = (row * height) + paddingTop;
 
         rect = new Rectangle();
@@ -118,8 +118,8 @@ public class Block implements Serializable {
         return block.paddingTop;
     }
 
-    public static int getPaddingH() {
-        return block.paddingH;
+    public static int getPaddingLeft() {
+        return block.paddingLeft;
     }
 
     public static int getHeight() {

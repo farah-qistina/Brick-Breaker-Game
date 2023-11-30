@@ -6,7 +6,7 @@ public class GameEngine {
 
     //updating game state, initializing game, updating physics, tracking time
     private OnAction onAction;
-    private int fps = 15;
+    private int frameDuration = 15;
     //thread for handling game loop and updating the game
     private Thread updateThread;
     //thread for physics calculations
@@ -25,7 +25,7 @@ public class GameEngine {
     //TODO check logic
     //converts to duration of each frame in ms
     public void setFps(int fps) {
-        this.fps = (int) 1000 / fps;
+        this.frameDuration = (int) 1000 / fps;
     }
 
     //initializes update thread
@@ -36,7 +36,7 @@ public class GameEngine {
                 while (!updateThread.isInterrupted()) {
                     try {
                         onAction.onUpdate();
-                        Thread.sleep(fps);
+                        Thread.sleep(frameDuration);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -59,7 +59,7 @@ public class GameEngine {
                 while (!physicsThread.isInterrupted()) {
                     try {
                         onAction.onPhysicsUpdate();
-                        Thread.sleep(fps);
+                        Thread.sleep(frameDuration);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

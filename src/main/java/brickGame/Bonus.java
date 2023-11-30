@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class Bonus implements Serializable {
     //TODO make private
-    public Rectangle choco;
+    public Rectangle bonus;
 
     public double x;
     public double y;
@@ -19,18 +19,18 @@ public class Bonus implements Serializable {
     public boolean taken = false;
 
     public Bonus(int row, int column) {
-        x = (column * (Block.getWidth())) + Block.getPaddingH() + (Block.getWidth() / 2) - 15;//half of bonus
+        x = (column * (Block.getWidth())) + Block.getPaddingLeft() + (Block.getWidth() / 2) - 15;//half of bonus
         y = (row * (Block.getHeight())) + Block.getPaddingTop() + (Block.getHeight() / 2) - 15;
 
         draw();
     }
 
     private void draw() {
-        choco = new Rectangle();
-        choco.setWidth(30);
-        choco.setHeight(30);
-        choco.setX(x);
-        choco.setY(y);
+        bonus = new Rectangle();
+        bonus.setWidth(30);
+        bonus.setHeight(30);
+        bonus.setX(x);
+        bonus.setY(y);
 
         String url;
         if (new Random().nextInt(20) % 2 == 0) {
@@ -39,6 +39,6 @@ public class Bonus implements Serializable {
             url = "bonus2.png";
         }
 
-        choco.setFill(new ImagePattern(new Image(url)));
+        bonus.setFill(new ImagePattern(new Image(url)));
     }
 }
