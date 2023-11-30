@@ -1,7 +1,10 @@
 package brickGame;
 
+
 import java.io.Serializable;
 
+//converts blocks to a byte stream and later reconstructed
+//TODO add color
 public class BlockSerializable implements Serializable {
     public final int row;
     public final int j;

@@ -1,10 +1,12 @@
 package brickGame;
 
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+//redundant
 //import sun.plugin2.message.Message;
 
 public class Score {
@@ -19,6 +21,7 @@ public class Score {
         label.setTranslateX(x);
         label.setTranslateY(y);
 
+        //add label to the JavaF application thread
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -43,6 +46,8 @@ public class Score {
         }).start();
     }
 
+    //shows messages such as game over and level up
+    //TODO reduce repetitiveness
     public void showMessage(String message, final Main main) {
         final Label label = new Label(message);
         label.setTranslateX(220);
@@ -76,6 +81,7 @@ public class Score {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                //2 game over labels?
                 Label label = new Label("Game Over :(");
                 label.setTranslateX(200);
                 label.setTranslateY(250);
@@ -87,17 +93,17 @@ public class Score {
                 restart.setTranslateY(300);
                 restart.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
+                    //restarts the game when the button is clicked
                     public void handle(ActionEvent event) {
                         main.restartGame();
                     }
                 });
-
                 main.root.getChildren().addAll(label, restart);
-
             }
         });
     }
 
+    //shows a win label
     public void showWin(final Main main) {
         Platform.runLater(new Runnable() {
             @Override
@@ -108,9 +114,7 @@ public class Score {
                 label.setScaleX(2);
                 label.setScaleY(2);
 
-
                 main.root.getChildren().addAll(label);
-
             }
         });
     }

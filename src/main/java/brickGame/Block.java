@@ -8,40 +8,47 @@ import javafx.scene.shape.Rectangle;
 
 import java.io.Serializable;
 
+//consists of properties, padding, hit codes, block type codes, initialization, draw, collision with blocks
 public class Block implements Serializable {
+    //static member as a dummy block
     private static Block block = new Block(-1, -1, Color.TRANSPARENT, 99);
 
+    //first of both is 0
     public int row;
     public int column;
-
 
     public boolean isDestroyed = false;
 
     private Color color;
     public int type;
 
+    //top-left corner of the block
     public int x;
     public int y;
 
     private int width = 100;
     private int height = 30;
+    //padding from the top of the window to the top of the first row of blocks
     private int paddingTop = height * 2;
+    //padding to the left of the blocks
     private int paddingH = 50;
     public Rectangle rect;
 
-
+    //hit codes
     public static int NO_HIT = -1;
     public static int HIT_RIGHT = 0;
     public static int HIT_BOTTOM = 1;
     public static int HIT_LEFT = 2;
     public static int HIT_TOP = 3;
 
+    //block type codes
     public static int BLOCK_NORMAL = 99;
     public static int BLOCK_CHOCO = 100;
     public static int BLOCK_STAR = 101;
     public static int BLOCK_HEART = 102;
 
 
+    //block initialization
     public Block(int row, int column, Color color, int type) {
         this.row = row;
         this.column = column;
@@ -76,10 +83,11 @@ public class Block implements Serializable {
         } else {
             rect.setFill(color);
         }
-
     }
 
-
+    //collision detection
+    //TODO add edge collision
+    //TODO consider radius
     public int checkHitToBlock(double xBall, double yBall) {
 
         if (isDestroyed) {
@@ -105,6 +113,7 @@ public class Block implements Serializable {
         return NO_HIT;
     }
 
+    //accessor methods
     public static int getPaddingTop() {
         return block.paddingTop;
     }
@@ -120,5 +129,4 @@ public class Block implements Serializable {
     public static int getWidth() {
         return block.width;
     }
-
 }

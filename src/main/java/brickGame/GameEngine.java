@@ -1,14 +1,20 @@
 package brickGame;
 
 
+//game logic
 public class GameEngine {
 
+    //updating game state, initializing game, updating physics, tracking time
     private OnAction onAction;
     private int fps = 15;
+    //thread for handling game loop and updating the game
     private Thread updateThread;
+    //thread for physics calculations
     private Thread physicsThread;
+    //flag to indicate whether game has stopped
     public boolean isStopped = true;
 
+    //sets interface for handling game actions
     public void setOnAction(OnAction onAction) {
         this.onAction = onAction;
     }
@@ -16,10 +22,13 @@ public class GameEngine {
     /**
      * @param fps set fps and we convert it to millisecond
      */
+    //TODO check logic
+    //converts to duration of each frame in ms
     public void setFps(int fps) {
         this.fps = (int) 1000 / fps;
     }
 
+    //initializes update thread
     private synchronized void Update() {
         updateThread = new Thread(new Runnable() {
             @Override
@@ -37,6 +46,8 @@ public class GameEngine {
         updateThread.start();
     }
 
+    //calls the onInit method to initialize the game
+    //TODO check redundancy
     private void Initialize() {
         onAction.onInit();
     }
@@ -55,9 +66,7 @@ public class GameEngine {
                 }
             }
         });
-
         physicsThread.start();
-
     }
 
     public void start() {
@@ -78,8 +87,10 @@ public class GameEngine {
         }
     }
 
+    //tracks elapsed time in game
     private long time = 0;
 
+    //thread for updating elapsed time
     private Thread timeThread;
 
     private void TimeStart() {
@@ -110,5 +121,4 @@ public class GameEngine {
 
         void onTime(long time);
     }
-
 }

@@ -1,11 +1,13 @@
 package brickGame;
 
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
+//reading the saved state of the game from a file
 public class LoadSave {
     public boolean          isExistHeartBlock;
     public boolean          isGoldStatus;
@@ -31,13 +33,12 @@ public class LoadSave {
     public long             time;
     public long             goldTime;
     public double           vX;
+    //stores instances of the serialized objects
     public ArrayList<BlockSerializable> blocks = new ArrayList<BlockSerializable>();
 
-
     public void read() {
-
-
         try {
+            //deserialize data stored in the file
             ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(new File(Main.savePath)));
 
 
@@ -71,6 +72,7 @@ public class LoadSave {
             collideToTopBlock = inputStream.readBoolean();
 
 
+            //serialized blocks array read separately
             try {
                 blocks = (ArrayList<BlockSerializable>) inputStream.readObject();
             } catch (ClassNotFoundException e) {
@@ -80,6 +82,5 @@ public class LoadSave {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }
