@@ -73,8 +73,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private GameEngine engine;
 
     //Save file paths
-    public static String savePath    = "D:/save/save.mdds";
-    public static String savePathDir = "D:/save/";
+    public static String savePath    = "./save/save.mdds";
+    public static String savePathDir = "./save/";
 
     //Game elements
     private final ArrayList<Block> blocks = new ArrayList<Block>();
