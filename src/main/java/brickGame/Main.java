@@ -64,14 +64,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private int destroyedBlockCount = 0;
 
-//redundant
-//private final double v = 1.000;
-
     private int  heart    = 3;
     private int  score    = 0;
     private long time     = 0;
-    //redundant
-    private long hitTime  = 0;
     private long goldTime = 0;
 
     //Game engine
@@ -254,7 +249,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 }
                 //Block creation and addition
                 blocks.add(new Block(j, i, colors[r % (colors.length)], type));
-                //redundant
                 //System.out.println("colors " + r % (colors.length));
             }
         }
@@ -278,18 +272,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             case RIGHT:
                 move(RIGHT);
                 break;
-//            redundant
-//            case DOWN:
-//                //setPhysicsToBall();
-//                break;
             //Saves the game when s is pressed
             case S:
                 saveGame();
                 break;
         }
     }
-    //redundant
-    //float oldXBreak;
 
     //Move the breaker based on the direction parameter
     private void move(final int direction) {
@@ -394,8 +382,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     //Ball physics
     private void setPhysicsToBall() {
-        //redundant
-        //v = ((time - hitTime) / 1000.000) + 1.000;
 
         //Update ball position based on velocity
         if (goDownBall) {
@@ -417,8 +403,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         //Handle boundary conditions
         //TODO change boundary
         if (yBall <= 0) {
-            //redundant
-            //vX = 1.000;
             resetCollideFlags();
             goDownBall = true;
             return;
@@ -436,8 +420,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     engine.stop();
                 }
             }
-            //redundant
-            //return;
         }
 
         //Handle collision with the paddle
@@ -446,8 +428,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             //System.out.println("Collide1");
             //Checks if the ball is on the paddle or not
             if (xBall >= xBreak && xBall <= xBreak + breakWidth) {
-                //redundant
-                hitTime = time;
                 //TODO arrange reset efficiently
                 resetCollideFlags();
                 collideToBreak = true;
@@ -459,8 +439,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
                 //if the ball is near the centre of the paddle
                 if (Math.abs(relation) <= 0.3) {
-                    //redundant
-                    //vX = 0;
                     vX = Math.abs(relation);
                 //if the ball is towards the edges of the paddle
                 } else if (Math.abs(relation) > 0.3 && Math.abs(relation) <= 0.7) {
@@ -481,15 +459,11 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         //Handle collision with walls
         if (xBall >= sceneWidth) {
             resetCollideFlags();
-            //redundant
-            //vX = 1.000;
             collideToRightWall = true;
         }
 
         if (xBall <= 0) {
             resetCollideFlags();
-            //redundant
-            //vX = 1.000;
             collideToLeftWall = true;
         }
 
@@ -686,18 +660,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     isExistHeartBlock = false;
 
                     //stops the game engine
-                    engine.stop();
+                    engine.stop(); //halts game loop before transitioning to a new level
                     resetCollideFlags();
                     goDownBall = true;
-
-                    //redundant
-                    hitTime = 0;
 
                     time = 0;
                     goldTime = 0;
 
-                    //redundant as it was stopped earlier
-                    engine.stop(); //halts game loop before transitioning to a new level
                     //clear list of blocks and choco
                     blocks.clear();
                     chocos.clear();
@@ -728,8 +697,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
             isGoldStatus = false;
             isExistHeartBlock = false;
-            //redundant
-            hitTime = 0;
             time = 0;
             goldTime = 0;
 
