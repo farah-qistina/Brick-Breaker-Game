@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Map;
 
 //reading the saved state of the game from a file
 public class LoadSave {
@@ -34,7 +35,7 @@ public class LoadSave {
     public long             goldTime;
     public double           vX;
     //stores instances of the serialized objects
-    public ArrayList<BlockSerializable> blocks = new ArrayList<BlockSerializable>();
+    public ArrayList<Map<String, Integer>> blocks = new ArrayList<Map<String, Integer>>();
 
     public void read() {
         try {
@@ -74,7 +75,7 @@ public class LoadSave {
 
             //serialized blocks array read separately
             try {
-                blocks = (ArrayList<BlockSerializable>) inputStream.readObject();
+                blocks = (ArrayList<Map<String, Integer>>) inputStream.readObject();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }

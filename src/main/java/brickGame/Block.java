@@ -8,6 +8,9 @@ import javafx.scene.shape.Rectangle;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
+import java.util.Map;
+
 //consists of properties, padding, hit codes, block type codes, initialization, draw, collision with blocks
 public class Block implements Serializable {
     //static member as a dummy block
@@ -83,6 +86,16 @@ public class Block implements Serializable {
         } else {
             rect.setFill(color);
         }
+    }
+
+    //converts blocks to a map and later reconstructed
+    //TODO add color
+    public Map<String, Integer> BlockSerializable(int row, int column, int type){
+        Map<String, Integer> result = new HashMap<>();
+        result.put("row",row);
+        result.put("column", column);
+        result.put("type", type);
+        return result;
     }
 
     //collision detection

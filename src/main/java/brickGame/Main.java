@@ -20,6 +20,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+//use of hash for serializables
+import java.util.HashMap;
+import java.util.Map;
+
 //@Override, indicates that it overrides a method declared in an interface or superclass
 
 //Main class that extends Application and implements event handlers and game engine callbacks
@@ -556,7 +560,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     outputStream.writeBoolean(collideToTopBlock);
 
                     //create a list to store serializable representations of non-destroyed blocks
-                    ArrayList<BlockSerializable> blockSerializables = new ArrayList<BlockSerializable>();
+//                    ArrayList<BlockSerializable> blockSerializables = new ArrayList<BlockSerializable>();
+                    ArrayList<Map<String, Integer>> blockSerializables = new ArrayList<Map<String, Integer>>();
                     for (Block block : blocks) {
                         //skip destroyed blocks
                         if (block.isDestroyed) {
@@ -564,7 +569,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                         }
                         //add a serializable representation of the block to the list
                         //TODO add color
-                        blockSerializables.add(new BlockSerializable(block.row, block.column, block.type));
+                        blockSerializables.add(block.BlockSerializable(block.row, block.column, block.type));
                     }
 
                     //write the list of block serializables to the file
@@ -629,12 +634,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         bonuses.clear();
 
         //create block objects based on the serialized data
-        for (BlockSerializable ser : loadSave.blocks) {
+        for (Map<String, Integer> ser : loadSave.blocks) {
             //TODO remove color
             //generate a random number to determine the color
             int r = new Random().nextInt(200);
             //create a new block and add it to the blocks list
-            blocks.add(new Block(ser.row, ser.column, colors[r % colors.length], ser.type));
+            blocks.add(new Block(ser.get("row"), ser.get("column"), colors[r % colors.length], ser.get("type")));
         }
 
         try {
