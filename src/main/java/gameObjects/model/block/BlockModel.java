@@ -1,73 +1,70 @@
 package gameObjects.model.block;
 
-import brickGame.Block;
-import javafx.scene.paint.Color;
+import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 
+import java.util.Random;
+
+/**
+ * Class that stores data for BallController
+ */
 public class BlockModel {
+    protected static Random rnd;
+    protected static int blockWidth = 100;
+    protected static int blockHeight = 30;
+    //top-left corner
+    private double xBlock;
+    private double yBlock;
+    private String name;
+    private boolean broken;
+    private Image img;
+
     //block initialization
-    public BlockModel(int row, int column, Color color, int type) {
-        this.row = row;
-        this.column = column;
-        this.color = color;
-        this.type = type;
+    public BlockModel(String name, double xBlock, double yBlock,Image img) {
 
-        draw();
+        setBroken(false);
+        setRnd(new Random());
+        this.setName(name);
+
+        this.xBlock = xBlock;
+        this.yBlock = yBlock;
+        this.img = img;
+//        this.row = row;
+//        this.column = column;
+//        this.color = color;
+//        this.type = type;
+//
+//        draw();
     }
-    //static member as a dummy block
-    private static Block block = new Block(-1, -1, Color.TRANSPARENT, 99);
+//    //static member as a dummy block
+//    private static Block block = new Block(-1, -1, Color.TRANSPARENT, 99);
+//
+//    //first of both is 0
+//    public int row;
+//    public int column;
+//    //padding from the top of the window to the top of the first row of blocks
+//    private int paddingTop = height * 2;
+//    //padding to the left of the blocks
+//    private int paddingLeft = 50;
 
-    //first of both is 0
-    public int row;
-    public int column;
+    public void setX(double x) {this.xBlock = x;}
+    public double getX() {return xBlock;}
 
-    public boolean isDestroyed = false;
+    public void setY(double y) {this.yBlock = y;}
+    public double getY() {return yBlock;}
 
-    private Color color;
-    public int type;
+    public static int getBlockWidth() {return blockWidth;}
+    public static int getBlockHeight() {return blockHeight;}
+    public static void setRnd(Random rnd) {BlockModel.rnd = rnd;}
+    public static Random getRnd() {return rnd;}
 
-    //top-left corner of the block
-    public int x;
-    public int y;
+    public void setName(String name) {this.name = name;}
+    public String getName() {return name;}
 
-    private int width = 100;
-    private int height = 30;
-    //padding from the top of the window to the top of the first row of blocks
-    private int paddingTop = height * 2;
-    //padding to the left of the blocks
-    private int paddingLeft = 50;
-    public Rectangle rect;
-    private final Color[]          colors = new Color[]{
-            Color.MAGENTA,
-            Color.RED,
-            Color.GOLD,
-            Color.CORAL,
-            Color.AQUA,
-            Color.VIOLET,
-            Color.GREENYELLOW,
-            Color.ORANGE,
-            Color.PINK,
-            Color.SLATEGREY,
-            Color.YELLOW,
-            Color.TOMATO,
-            Color.TAN,
-    };
-
-
-    //accessor methods
-    public static int getPaddingTop() {
-        return block.paddingTop;
+    public  void setBroken(boolean broken) {
+        this.broken = broken;
     }
+    public boolean getBroken() {return broken;}
 
-    public static int getPaddingLeft() {
-        return block.paddingLeft;
-    }
-
-    public static int getHeight() {
-        return block.height;
-    }
-
-    public static int getWidth() {
-        return block.width;
-    }
+    public Image getBlockImage() {return img;}
 }

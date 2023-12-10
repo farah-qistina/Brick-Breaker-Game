@@ -7,11 +7,11 @@ import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
+import java.util.Random;
+
 public class BoardController {
     //Flags to track ball movement and collisions
-    //should the ball move down and right
-    private boolean goDownBall                  = true;
-    private boolean goRightBall                 = true;
+
     //whether the ball has collided with the paddle
     private boolean collideToPaddle               = false;
     //whether the ball should move to the right after colliding with the paddle
@@ -23,44 +23,11 @@ public class BoardController {
     private boolean collideToLeftBlock           = false;
     private boolean collideToTopBlock            = false;
 
-    //Velocity components for the ball
-    //Controls the speed and direction to the right
-    private double vX = 1.000;
-    private final double vY = 1.000;
+    //should the ball move down and right
+    private boolean goDownBall                  = true;
+    private boolean goRightBall                 = true;
 
-    public static int NO_HIT = -1;
-    public static int HIT_RIGHT = 0;
-    public static int HIT_BOTTOM = 1;
-    public static int HIT_LEFT = 2;
-    public static int HIT_TOP = 3;
 
-    //collision detection with block
-    //TODO add edge collision
-    //TODO consider radius
-    public int checkHitToBlock(double xBall, double yBall) {
-
-        if (isDestroyed) {
-            return NO_HIT;
-        }
-
-        if (xBall >= x && xBall <= x + width && yBall == y + height) {
-            return HIT_BOTTOM;
-        }
-
-        if (xBall >= x && xBall <= x + width && yBall == y) {
-            return HIT_TOP;
-        }
-
-        if (yBall >= y && yBall <= y + height && xBall == x + width) {
-            return HIT_RIGHT;
-        }
-
-        if (yBall >= y && yBall <= y + height && xBall == x) {
-            return HIT_LEFT;
-        }
-
-        return NO_HIT;
-    }
 
     //Reset all collision flags
     //helps prevent unintended or persistent effects from previous collisions that could affect the ball's behavior incorrectly
@@ -77,27 +44,33 @@ public class BoardController {
         collideToTopBlock = false;
     }
 
+//    Random random = new Random();
+//    //generates random x and y coordinates for the ball
+//    xBall = random.nextInt(sceneWidth) + 1;
+//    //Ensures the ball starts below the blocks ((level + 1) * Block.getHeight() + 15) and above a certain threshold (sceneHeight - 200)
+//    yBall = random.nextInt(sceneHeight - 200) + (level + 1) * Block.getHeight() + 15;
+
+    //Block coordinates
+//    x = (column * width) + paddingLeft;
+//    y = (row * height) + paddingTop;
+
     //Ball physics
     private void setPhysicsToBall() {
 
-        //Update ball position based on velocity
-        if (goDownBall) {
-            //going down
-            yBall += vY;
-        } else {
-            //going up
-            yBall -= vY;
+//        BallController.move(goDownBall);
+//        BallController.move(goRightBall);
+
+        //Handle collision with walls
+        //TODO change boundary
+        if (xBall >= sceneWidth) {
+            resetCollideFlags();
+            collideToRightWall = true;
         }
 
-        if (goRightBall) {
-            //going right
-            xBall += vX;
-        } else {
-            //going left
-            xBall -= vX;
+        if (xBall <= 0) {
+            resetCollideFlags();
+            collideToLeftWall = true;
         }
-
-        //Handle boundary conditions
         //TODO change boundary
         if (yBall <= 0) {
             resetCollideFlags();
@@ -151,17 +124,6 @@ public class BoardController {
                 collideToPaddleAndMoveToRight = xBall - centerPaddleX > 0;
                 //System.out.println("Collide2");
             }
-        }
-
-        //Handle collision with walls
-        if (xBall >= sceneWidth) {
-            resetCollideFlags();
-            collideToRightWall = true;
-        }
-
-        if (xBall <= 0) {
-            resetCollideFlags();
-            collideToLeftWall = true;
         }
 
         //TODO integrate into if-else above

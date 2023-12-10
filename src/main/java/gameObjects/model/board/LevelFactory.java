@@ -1,9 +1,7 @@
 package gameObjects.model.board;
 
-import brickGame.Block;
 import javafx.scene.shape.Rectangle;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class LevelFactory {

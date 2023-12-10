@@ -4,11 +4,11 @@ import gameObjects.controller.BlockController;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 
-public class HeartBlock extends BlockController {
-    private static final String NAME = "Heart Block";
-    private static final Image img = new Image("heart.jpg");
+public class ChocBlock extends BlockController {
+    private static final String NAME = "Chocolate Block";
+    private static final Image img = new Image("choco.jpg");
 
-    public HeartBlock(double xBlock, double yBlock) {
+    public ChocBlock(double xBlock, double yBlock) {
         super(NAME, xBlock, yBlock, img);
     }
 
