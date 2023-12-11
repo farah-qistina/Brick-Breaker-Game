@@ -1,10 +1,9 @@
-package gameObjects.controller;
+package brickGame.gameObjects.controller;
 
-import gameObjects.model.block.BlockModel;
-import gameObjects.model.block.ImpactDirection;
-import gameObjects.model.paddle.PaddleModel;
-import gameObjects.model.paddle.Playable;
-import gameObjects.view.PaddleView;
+import brickGame.gameObjects.model.block.ImpactDirection;
+import brickGame.gameObjects.model.paddle.PaddleModel;
+import brickGame.gameObjects.model.paddle.Playable;
+import brickGame.gameObjects.view.PaddleView;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 
@@ -13,13 +12,20 @@ public class PaddleController implements Playable {
     private Rectangle paddleFace;
     private PaddleModel paddleModel;
     private PaddleView paddleView;
+    private static PaddleController paddle;
 
     //Direction constants
     private static final int LEFT  = 1;
     private static final int RIGHT = 2;
 
-    private PaddleController(int sceneWidth, double xPaddle, double yPaddle) {
-        paddleModel = new PaddleModel(sceneWidth, xPaddle, yPaddle);
+    private PaddleController() {
+
+        // Prints error message
+        System.out.println("Singleton Violated Error: Second Player object should not be created!!");
+    }
+
+    private PaddleController(double xPaddle, double yPaddle) {
+        paddleModel = new PaddleModel(xPaddle, yPaddle);
         paddleFace = makePaddleFace();
         paddleView = new PaddleView();
     }
@@ -28,7 +34,23 @@ public class PaddleController implements Playable {
         Rectangle out = new Rectangle();
         out.setWidth(PaddleModel.getPaddleWidth());
         out.setHeight(PaddleModel.getPaddleHeight());
+        out.setX(paddleModel.getxPaddle());
+        out.setY(paddleModel.getyPaddle());
         return out;
+    }
+
+    public static PaddleController getUniquePlayer() {
+        if (paddle == null) {
+            paddle = new PaddleController();
+        }
+        return paddle;
+    }
+
+    public static PaddleController getUniquePlayer(double xPaddle, double yPaddle) {
+        if (paddle == null) {
+            paddle = new PaddleController(xPaddle, yPaddle);
+        }
+        return paddle;
     }
 
     public final ImpactDirection findImpact (BallController ballController) {
@@ -103,4 +125,8 @@ public class PaddleController implements Playable {
     }
 
     public Image getImage() {return PaddleModel.getImage();}
+
+    public double getCenterPaddleX() {
+        return paddleModel.getCenterPaddleX();
+    }
 }

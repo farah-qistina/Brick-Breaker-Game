@@ -1,6 +1,6 @@
-package gameObjects.view;
+package brickGame.gameObjects.view;
 
-import gameObjects.controller.PaddleController;
+import brickGame.gameObjects.controller.PaddleController;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 

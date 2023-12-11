@@ -1,4 +1,4 @@
-package gameObjects.model.paddle;
+package brickGame.gameObjects.model.paddle;
 
 public interface Playable {
     public void move(final int direction);

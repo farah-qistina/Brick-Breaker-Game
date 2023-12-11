@@ -1,5 +1,6 @@
-package gameObjects.model.paddle;
+package brickGame.gameObjects.model.paddle;
 
+import brickGame.gameWindow.GameBoard;
 import javafx.scene.image.Image;
 
 public class PaddleModel {
@@ -19,8 +20,8 @@ public class PaddleModel {
     private final int max;
     private static final Image img = new Image("paddle.jpg");
 
-    public PaddleModel(int sceneWidth,double xPaddle, double yPaddle) {
-        max = sceneWidth - paddleWidth;
+    public PaddleModel(double xPaddle, double yPaddle) {
+        max = GameBoard.getSceneWidth() - paddleWidth;
         this.xPaddle = xPaddle;
         this.yPaddle = yPaddle;
     }
