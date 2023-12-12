@@ -15,9 +15,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+/**
+ * Main thread (UI)
+ */
 public class GraphicsMain extends Application {
-    //Application entry point
-    //Main thread (UI)
 
     //Window; holds the scenes
     public Stage primaryStage;
@@ -30,7 +31,7 @@ public class GraphicsMain extends Application {
     //Game engine
     private static GameEngine engine;
 
-//UI elements
+    //UI elements
     //Display; layout purposes for UI
 
     static Button load    = null;
@@ -45,6 +46,11 @@ public class GraphicsMain extends Application {
     static BoardController boardController;
     public GraphicsMain() {}
 
+    /**
+     * overridden start method
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -151,7 +157,9 @@ public class GraphicsMain extends Application {
         }
     }
 
-    //Move to the next game level
+    /**
+     * Move to the next game level
+     */
     public void nextLevel() {
         //Platform.runLater ensures that UI updates are done on the main thread
         Platform.runLater(new Runnable() {
@@ -175,8 +183,9 @@ public class GraphicsMain extends Application {
         });
     }
 
-    //Restart the game
-    //TODO redundant; make a reset method
+    /**
+     * restart the game
+     */
     public void restartGame() {
         try {
             engine.stop();
@@ -188,7 +197,11 @@ public class GraphicsMain extends Application {
             e.printStackTrace();
         }
     }
-    //Entry point for the Java Virtual Machine when launching
+
+    /**
+     * Entry point for the Java Virtual Machine when launching
+     * @param args argument
+     */
     public static void main(String[] args) {
         //launch is a method of Application class which is part of the JavaFX lib
         //launch initializes the JavaFX runtime and starts the JavaFX application
