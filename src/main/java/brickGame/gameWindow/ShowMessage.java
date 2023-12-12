@@ -1,14 +1,16 @@
-package brickGame;
+package brickGame.gameWindow;
 
+import brickGame.GraphicsMain;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-//import sun.plugin2.message.Message;
 
-public class Score {
-    public void show(final double x, final double y, int score, final Main main) {
+
+public class ShowMessage {
+    GraphicsMain graphicsMain = new GraphicsMain();
+    public void show(final double x, final double y, int score) {
         String sign;
         if (score >= 0) {
             sign = "+";
@@ -19,10 +21,11 @@ public class Score {
         label.setTranslateX(x);
         label.setTranslateY(y);
 
+        //add label to the JavaF application thread
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                main.root.getChildren().add(label);
+                GraphicsMain.root.getChildren().add(label);
             }
         });
 
@@ -43,7 +46,9 @@ public class Score {
         }).start();
     }
 
-    public void showMessage(String message, final Main main) {
+    //shows messages such as game over and level up
+    //TODO reduce repetitiveness
+    public void showMessage(String message) {
         final Label label = new Label(message);
         label.setTranslateX(220);
         label.setTranslateY(340);
@@ -51,7 +56,7 @@ public class Score {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                main.root.getChildren().add(label);
+                GraphicsMain.root.getChildren().add(label);
             }
         });
 
@@ -72,10 +77,11 @@ public class Score {
         }).start();
     }
 
-    public void showGameOver(final Main main) {
+    public void showGameOver() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                //2 game over labels?
                 Label label = new Label("Game Over :(");
                 label.setTranslateX(200);
                 label.setTranslateY(250);
@@ -87,18 +93,18 @@ public class Score {
                 restart.setTranslateY(300);
                 restart.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
+                    //restarts the game when the button is clicked
                     public void handle(ActionEvent event) {
-                        main.restartGame();
+                        graphicsMain.restartGame();
                     }
                 });
-
-                main.root.getChildren().addAll(label, restart);
-
+                GraphicsMain.root.getChildren().addAll(label, restart);
             }
         });
     }
 
-    public void showWin(final Main main) {
+    //shows a win label
+    public void showWin() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -108,9 +114,7 @@ public class Score {
                 label.setScaleX(2);
                 label.setScaleY(2);
 
-
-                main.root.getChildren().addAll(label);
-
+                GraphicsMain.root.getChildren().addAll(label);
             }
         });
     }
