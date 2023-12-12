@@ -4,7 +4,7 @@ import brickGame.gameObjects.controller.BallController;
 import javafx.scene.image.Image;
 
 /**
- * Class inherits from the Ball class
+ * NormalBall Class inherits from the Ball class
  */
 
 public class NormalBall extends BallController{
@@ -18,7 +18,7 @@ public class NormalBall extends BallController{
      * @param xBall The x-coordinate of the ball
      * @param yBall The y-coordinate of the ball
      */
-    public NormalBall(String name, double xBall, double yBall) {
+    public NormalBall(String ballType, double xBall, double yBall) {
         super("NORMAL", xBall, yBall, img);
     }
 }
