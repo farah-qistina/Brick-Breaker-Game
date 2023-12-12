@@ -1,8 +1,6 @@
-package gameObjects.model.ball;
+package brickGame.gameObjects.model.ball;
 
 import javafx.scene.image.Image;
-
-import java.util.Random;
 
 /**
  * Class that stores data for BallController
@@ -42,18 +40,19 @@ public class BallModel {
         up = yBall - ballRadius;
         down = yBall + ballRadius;
 
-        vX = 1.000;
-        vY = 1.000;
-
         this.img = img;
         this.name = name;
     }
 
-    public void setVelocity(double x, double y) {
-        vX = x;
-        vY = y;
+    public void setvX(double vX) {
+        this.vX = vX;
     }
+
     public double getvX() {return vX;}
+
+    public void setvY(double vY) {
+        this.vY = vY;
+    }
 
     public double getvY(){return vY;}
 

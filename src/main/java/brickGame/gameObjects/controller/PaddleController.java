@@ -34,8 +34,8 @@ public class PaddleController implements Playable {
         Rectangle out = new Rectangle();
         out.setWidth(PaddleModel.getPaddleWidth());
         out.setHeight(PaddleModel.getPaddleHeight());
-        out.setX(paddleModel.getxPaddle());
-        out.setY(paddleModel.getyPaddle());
+        out.setX(getxPaddle());
+        out.setY(getyPaddle());
         return out;
     }
 
@@ -54,13 +54,18 @@ public class PaddleController implements Playable {
     }
 
     public final ImpactDirection findImpact (BallController ballController) {
-        if (ballController.getDown() >= paddleModel.getyPaddle() && ballController.getX() >= paddleModel.getxPaddle() && ballController.getX() <= paddleModel.getxPaddle() + PaddleModel.getPaddleWidth()) {
+        double xPaddle = paddleFace.getX();
+        double yPaddle = paddleFace.getY();
+        double xBall = ballController.getBallFace().getCenterX();
+        double yBall = ballController.getBallFace().getCenterY();
+
+        if (ballController.getDown() >= yPaddle && xBall >= xPaddle && xBall <= xPaddle + PaddleModel.getPaddleWidth()) {
             return ImpactDirection.UP_IMPACT;
         }
-        if (ballController.getLeft() >= paddleModel.getxPaddle() && ballController.getY() >= paddleModel.getyPaddle() && ballController.getY() <= paddleModel.getyPaddle() + PaddleModel.getPaddleHeight()) {
+        if (ballController.getLeft() >= xPaddle && yBall >= yPaddle && yBall <= yPaddle + PaddleModel.getPaddleHeight()) {
             return ImpactDirection.RIGHT_IMPACT;
         }
-        if (ballController.getRight() <= paddleModel.getxPaddle() && ballController.getY() >= paddleModel.getyPaddle() && ballController.getY() <= paddleModel.getyPaddle() + PaddleModel.getPaddleHeight()) {
+        if (ballController.getRight() <= xPaddle && yBall >= yPaddle && yBall <= yPaddle + PaddleModel.getPaddleHeight()) {
             return ImpactDirection.LEFT_IMPACT;
         }
         return ImpactDirection.NO_IMPACT;
@@ -79,21 +84,19 @@ public class PaddleController implements Playable {
                 //Controls the number of movement steps the paddle takes, iterates 30 times
                 for (int i = 0; i < 30; i++) {
                     //Checks if the paddle has reached the right edge of the game area and direction is right, method returns to prevent movement
-                    if (paddleModel.getxPaddle() == paddleModel.getMax() && direction == RIGHT) {
+                    if (paddleFace.getX() == paddleModel.getMax() && direction == RIGHT) {
                         return;
                     }
                     //"" left edge
-                    if (paddleModel.getxPaddle() == 0 && direction == LEFT) {
+                    if (paddleFace.getX() == 0 && direction == LEFT) {
                         return;
                     }
                     //Updates the X-coordinate of the paddle based on the direction
                     if (direction == RIGHT) {
-                        paddleModel.setxPaddle(paddleModel.getxPaddle() + 1);                        ;
+                        paddleFace.setX(paddleFace.getX() + 1);                      ;
                     } else {
-                        paddleModel.setxPaddle(paddleModel.getxPaddle() - 1);
+                        paddleFace.setX(paddleFace.getX() - 1);
                     }
-                    //Updates the center of paddle based on its new position
-                    paddleModel.setCenterPaddleX(paddleModel.getxPaddle() + PaddleModel.getHalfPaddleWidth());
                     //Introduces a sleep to slow down the movement making it visible and controlled
                     try {
                         Thread.sleep(initialSleepTime);
@@ -110,12 +113,11 @@ public class PaddleController implements Playable {
     }
 
     @Override
-    public void moveTo(double xPaddle) {
-        if (xPaddle >= paddleModel.getMax()) {
+    public void moveTo(double x) {
+        if (x >= paddleModel.getMax()) {
             return;
         }
-        paddleModel.setxPaddle(xPaddle);
-        paddleModel.setCenterPaddleX(paddleModel.getxPaddle() + PaddleModel.getHalfPaddleWidth());
+        paddleFace.setX(x);
     }
 
     public void updateView(PaddleController p) {paddleView.drawPaddle(p);}
@@ -126,7 +128,21 @@ public class PaddleController implements Playable {
 
     public Image getImage() {return PaddleModel.getImage();}
 
+    public void setxPaddle(double xPaddle) {
+        paddleModel.setxPaddle(xPaddle);
+    }
+    public double getxPaddle() {
+        return paddleModel.getxPaddle();
+    }
+
+    public void setyPaddle(double yPaddle) {
+        paddleModel.setyPaddle(yPaddle);
+    }
+    public double getyPaddle() {
+        return paddleModel.getyPaddle();
+    }
+
     public double getCenterPaddleX() {
-        return paddleModel.getCenterPaddleX();
+        return paddleFace.getX() + PaddleModel.getHalfPaddleWidth();
     }
 }

@@ -1,7 +1,6 @@
-package gameObjects.model.block;
+package brickGame.gameObjects.model.block;
 
 import javafx.scene.image.Image;
-import javafx.scene.shape.Rectangle;
 
 import java.util.Random;
 
@@ -42,10 +41,6 @@ public class BlockModel {
 //    //first of both is 0
 //    public int row;
 //    public int column;
-//    //padding from the top of the window to the top of the first row of blocks
-//    private int paddingTop = height * 2;
-//    //padding to the left of the blocks
-//    private int paddingLeft = 50;
 
     public void setX(double x) {this.xBlock = x;}
     public double getX() {return xBlock;}

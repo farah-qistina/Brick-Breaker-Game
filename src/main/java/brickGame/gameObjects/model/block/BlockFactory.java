@@ -1,6 +1,6 @@
-package gameObjects.model.block;
+package brickGame.gameObjects.model.block;
 
-import gameObjects.controller.BlockController;
+import brickGame.gameObjects.controller.BlockController;
 
 public class BlockFactory {
 

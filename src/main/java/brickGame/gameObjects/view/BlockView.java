@@ -1,7 +1,6 @@
-package gameObjects.view;
+package brickGame.gameObjects.view;
 
-import gameObjects.controller.BallController;
-import gameObjects.controller.BlockController;
+import brickGame.gameObjects.controller.BlockController;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 

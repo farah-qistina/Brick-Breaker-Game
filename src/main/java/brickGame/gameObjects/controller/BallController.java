@@ -1,62 +1,86 @@
-package gameObjects.controller;
+package brickGame.gameObjects.controller;
 import javafx.scene.shape.Circle;
 import javafx.scene.image.Image;
 
-import gameObjects.model.ball.BallModel;
-import gameObjects.view.BallView;
+import brickGame.gameObjects.model.ball.BallModel;
+import brickGame.gameObjects.view.BallView;
 
 /**
  * Abstract BallController class for other classes to inherit
  */
 public class BallController {
-    private final Circle ballFace = new Circle();
-    private final BallModel ballModel;
+    private static Circle ballFace = new Circle();
+    private static BallModel ballModel = null;
     private final BallView ballView;
 
     /**
      * Ball class constructor
-     *
+     * @param ballType
      * @param xBall The x-coordinate of the ball
      * @param yBall The y-coordinate of the ball
      * @param img The image of the ball according to type
      */
+
     public BallController(String ballType, double xBall,  double yBall, Image img) {
         ballModel = new BallModel(ballType, xBall, yBall, img);
-        ballFace.setRadius(BallModel.getBallRadius());
+        ballFace = makeBallFace();
         ballView = new BallView();
     }
 
-    public void moveX(boolean goRightBall) {
+    /**
+     * Makes a circular ball face
+     * @return circle ball face
+     */
+    private Circle makeBallFace() {
+        Circle out = new Circle();
+        out.setRadius(BallModel.getBallRadius());
+        out.setCenterX(getX());
+        out.setCenterY(getY());
+        return out;
+    }
+
+    /**
+     * Horizontally moves the ball's face
+     * @param goRightBall whether the ball moves right or left
+     */
+    public static void moveX(boolean goRightBall) {
         //Update ball position based on velocity
         if (goRightBall) {
             //going right
-            ballModel.setX(ballModel.getX()+ ballModel.getvX());
+            ballFace.setCenterX(ballFace.getCenterX() + getvX());
         } else {
             //going left
-            ballModel.setX(ballModel.getX()- ballModel.getvX());
+            ballFace.setCenterX(ballFace.getCenterX() - getvX());
         }
+        setPoints();
     }
 
-    public void moveY(boolean goDownBall) {
+    /**
+     * Vertically moves the
+     * @param goDownBall
+     */
+    public static void moveY(boolean goDownBall) {
         //Update ball position based on velocity
         if (goDownBall) {
             //going down
-            ballModel.setY(ballModel.getY()+ ballModel.getvY());
+            ballFace.setCenterY(ballFace.getCenterY() + getvY());
         } else {
             //going up
-            ballModel.setY(ballModel.getY()- ballModel.getvY());
+            ballFace.setCenterY(ballFace.getCenterY() - getvY());
         }
+        setPoints();
     }
 
     public void moveTo(double x, double y) {
-        ballModel.setX(x);
-        ballModel.setY(y);
+        ballFace.setCenterX(x);
+        ballFace.setCenterY(y);
+        setPoints();
     }
 
-    public void setPoints() {
+    public static void setPoints() {
         int ballRadius = BallModel.getBallRadius();
-        double x = ballModel.getX();
-        double y = ballModel.getY();
+        double x = ballFace.getCenterX();
+        double y = ballFace.getCenterY();
         ballModel.setRight(x + ballRadius);
         ballModel.setLeft(x - ballRadius);
         ballModel.setUp(y - ballRadius);
@@ -68,17 +92,22 @@ public class BallController {
     }
 
     public void setVelocity(double vX, double vY) {
-        ballModel.setVelocity(vX, vY);
+        setvX(vX);
+        setvY(vY);
     }
-
-
 
     public Circle getBallFace() {return ballFace;}
     public Image getBallImage() {return ballModel.getImage();}
     public double getX() {return ballModel.getX();}
     public double getY() {return ballModel.getY();}
-    public double getvX() {return ballModel.getvX();}
-    public double getvY() {return ballModel.getvY();}
+    public void setvX(double vX) {
+        ballModel.setvX(vX);
+    }
+    public static double getvX() {return ballModel.getvX();}
+    public void setvY(double vY) {
+        ballModel.setvY(vY);
+    }
+    public static double getvY() {return ballModel.getvY();}
     public double getRight() {return ballModel.getRight();}
     public double getLeft() {return ballModel.getLeft();}
     public double getUp() {return ballModel.getUp();}

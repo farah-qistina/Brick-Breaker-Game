@@ -1,5 +1,5 @@
-package gameObjects.model.ball;
-import gameObjects.controller.BallController;
+package brickGame.gameObjects.model.ball;
+import brickGame.gameObjects.controller.BallController;
 
 public class BallFactory {
     /**

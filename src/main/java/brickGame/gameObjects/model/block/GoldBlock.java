@@ -1,6 +1,6 @@
-package gameObjects.model.block;
+package brickGame.gameObjects.model.block;
 
-import gameObjects.controller.BlockController;
+import brickGame.gameObjects.controller.BlockController;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 

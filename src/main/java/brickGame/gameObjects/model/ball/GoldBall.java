@@ -1,6 +1,6 @@
-package gameObjects.model.ball;
+package brickGame.gameObjects.model.ball;
 
-import gameObjects.controller.BallController;
+import brickGame.gameObjects.controller.BallController;
 import javafx.scene.image.Image;
 
 /**
@@ -14,7 +14,7 @@ public class GoldBall extends BallController{
     /**
      * Constructor to create a normal ball
      *
-     * @param ballType The type of ball
+     * @param name The type of ball
      * @param xBall The x-coordinate of the ball
      * @param yBall The y-coordinate of the ball
      */

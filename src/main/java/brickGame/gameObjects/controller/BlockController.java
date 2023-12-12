@@ -1,8 +1,8 @@
-package gameObjects.controller;
+package brickGame.gameObjects.controller;
 
-import gameObjects.model.block.BlockModel;
-import gameObjects.model.block.ImpactDirection;
-import gameObjects.view.BlockView;
+import brickGame.gameObjects.model.block.BlockModel;
+import brickGame.gameObjects.model.block.ImpactDirection;
+import brickGame.gameObjects.view.BlockView;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 
@@ -42,8 +42,8 @@ public abstract class BlockController {
             return ImpactDirection.NO_IMPACT;
         }
 
-        double xBall = ballController.getX();
-        double yBall = ballController.getY();
+        double xBall = ballController.getBallFace().getCenterX();
+        double yBall = ballController.getBallFace().getCenterY();
         double xBlock = blockModel.getX();
         double yBlock = blockModel.getY();
         int width = BlockModel.getBlockWidth();
@@ -71,6 +71,9 @@ public abstract class BlockController {
     public final boolean getBroken() {
         return blockModel.getBroken();
     }
+    public void setBroken(boolean broken) {setBroken(broken);}
+    public static int getBlockWidth() {return BlockModel.getBlockWidth();}
+    public static int getBlockHeight() {return BlockModel.getBlockHeight();}
 
     public void updateView(BlockController block) {
         blockView.drawBlock(block);
@@ -104,5 +107,8 @@ public abstract class BlockController {
     public String getName() {
         return blockModel.getName();
     }
+
+    public double getX() {return blockModel.getX();}
+    public double getY() {return blockModel.getY();}
 
 }

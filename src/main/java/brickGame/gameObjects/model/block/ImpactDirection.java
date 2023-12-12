@@ -1,4 +1,4 @@
-package gameObjects.model.block;
+package brickGame.gameObjects.model.block;
 
 public enum ImpactDirection {
     UP_IMPACT,

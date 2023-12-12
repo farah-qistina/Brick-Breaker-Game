@@ -18,7 +18,7 @@ public class PaddleModel {
     private double centerPaddleX;
 
     private final int max;
-    private static final Image img = new Image("paddle.jpg");
+    private static final Image img = new Image("paddle.png");
 
     public PaddleModel(double xPaddle, double yPaddle) {
         max = GameBoard.getSceneWidth() - paddleWidth;
