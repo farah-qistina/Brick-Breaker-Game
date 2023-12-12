@@ -1,14 +1,16 @@
-package gameWindow;
+package brickGame.gameWindow;
 
-import brickGame.Main;
+import brickGame.GraphicsMain;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+
 public class ShowMessage {
-    public void show(final double x, final double y, int score, final Main main) {
+    GraphicsMain graphicsMain = new GraphicsMain();
+    public void show(final double x, final double y, int score) {
         String sign;
         if (score >= 0) {
             sign = "+";
@@ -23,7 +25,7 @@ public class ShowMessage {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                main.root.getChildren().add(label);
+                GraphicsMain.root.getChildren().add(label);
             }
         });
 
@@ -46,7 +48,7 @@ public class ShowMessage {
 
     //shows messages such as game over and level up
     //TODO reduce repetitiveness
-    public void showMessage(String message, final Main main) {
+    public void showMessage(String message) {
         final Label label = new Label(message);
         label.setTranslateX(220);
         label.setTranslateY(340);
@@ -54,7 +56,7 @@ public class ShowMessage {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                main.root.getChildren().add(label);
+                GraphicsMain.root.getChildren().add(label);
             }
         });
 
@@ -75,7 +77,7 @@ public class ShowMessage {
         }).start();
     }
 
-    public void showGameOver(final Main main) {
+    public void showGameOver() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -93,16 +95,16 @@ public class ShowMessage {
                     @Override
                     //restarts the game when the button is clicked
                     public void handle(ActionEvent event) {
-                        main.restartGame();
+                        graphicsMain.restartGame();
                     }
                 });
-                main.root.getChildren().addAll(label, restart);
+                GraphicsMain.root.getChildren().addAll(label, restart);
             }
         });
     }
 
     //shows a win label
-    public void showWin(final Main main) {
+    public void showWin() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -112,7 +114,7 @@ public class ShowMessage {
                 label.setScaleX(2);
                 label.setScaleY(2);
 
-                main.root.getChildren().addAll(label);
+                GraphicsMain.root.getChildren().addAll(label);
             }
         });
     }

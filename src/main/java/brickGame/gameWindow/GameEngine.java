@@ -1,4 +1,4 @@
-package gameWindow;
+package brickGame.gameWindow;
 
 
 //game logic
@@ -12,6 +12,11 @@ public class GameEngine {
     //thread for physics calculations
     private Thread physicsThread;
     //flag to indicate whether game has stopped
+    //tracks elapsed time in game
+    private long time = 0;
+
+    //thread for updating elapsed time
+    private Thread timeThread;
     public boolean isStopped = true;
 
     //sets interface for handling game actions
@@ -87,12 +92,6 @@ public class GameEngine {
         }
     }
 
-    //tracks elapsed time in game
-    private long time = 0;
-
-    //thread for updating elapsed time
-    private Thread timeThread;
-
     private void TimeStart() {
         timeThread = new Thread(new Runnable() {
             @Override
@@ -109,16 +108,5 @@ public class GameEngine {
             }
         });
         timeThread.start();
-    }
-
-
-    public interface OnAction {
-        void onUpdate();
-
-        void onInit();
-
-        void onPhysicsUpdate();
-
-        void onTime(long time);
     }
 }
