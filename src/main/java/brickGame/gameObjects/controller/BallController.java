@@ -15,7 +15,7 @@ public class BallController {
 
     /**
      * Ball class constructor
-     * @param ballType
+     * @param ballType type of ball
      * @param xBall The x-coordinate of the ball
      * @param yBall The y-coordinate of the ball
      * @param img The image of the ball according to type
