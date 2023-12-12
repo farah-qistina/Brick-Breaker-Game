@@ -6,7 +6,7 @@ import brickGame.gameObjects.model.ball.BallModel;
 import brickGame.gameObjects.view.BallView;
 
 /**
- * Abstract BallController class for other classes to inherit
+ * Abstract class for other classes to inherit
  */
 public class BallController {
     private static Circle ballFace = new Circle();
@@ -56,8 +56,8 @@ public class BallController {
     }
 
     /**
-     * Vertically moves the
-     * @param goDownBall
+     * Vertically moves the ball's face
+     * @param goDownBall whether the ball moves down or up
      */
     public static void moveY(boolean goDownBall) {
         //Update ball position based on velocity
@@ -71,12 +71,20 @@ public class BallController {
         setPoints();
     }
 
+    /**
+     * moves the face of the ball to a point (x, y)
+     * @param x the x coordinate
+     * @param y the y coordinate
+     */
     public void moveTo(double x, double y) {
         ballFace.setCenterX(x);
         ballFace.setCenterY(y);
         setPoints();
     }
 
+    /**
+     * sets the top, right, bottom, and left points of the ball
+     */
     public static void setPoints() {
         int ballRadius = BallModel.getBallRadius();
         double x = ballFace.getCenterX();
@@ -87,14 +95,25 @@ public class BallController {
         ballModel.setDown(y + ballRadius);
     }
 
+    /**
+     * updates the view of the ball
+     * @param ball the ball
+     */
     public void updateView(BallController ball) {
         ballView.drawBall(ball);
     }
 
+    /**
+     * set the velocity of the ball
+     * @param vX horizonal speed
+     * @param vY vertical speed
+     */
     public void setVelocity(double vX, double vY) {
         setvX(vX);
         setvY(vY);
     }
+
+    //setters and getter methods
 
     public Circle getBallFace() {return ballFace;}
     public Image getBallImage() {return ballModel.getImage();}

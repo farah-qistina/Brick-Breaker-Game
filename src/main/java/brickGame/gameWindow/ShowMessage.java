@@ -7,9 +7,18 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-
+/**
+ * a class to display messages on the root pane
+ */
 public class ShowMessage {
     GraphicsMain graphicsMain = new GraphicsMain();
+
+    /**
+     * shows the score or -1 to signal heart loss
+     * @param x x coordinate of message
+     * @param y y coordinate of message
+     * @param score score update
+     */
     public void show(final double x, final double y, int score) {
         String sign;
         if (score >= 0) {
@@ -46,8 +55,11 @@ public class ShowMessage {
         }).start();
     }
 
-    //shows messages such as game over and level up
-    //TODO reduce repetitiveness
+
+    /**
+     * shows messages such as game over and level up
+     * @param message message to be displayed
+     */
     public void showMessage(String message) {
         final Label label = new Label(message);
         label.setTranslateX(220);
@@ -77,6 +89,9 @@ public class ShowMessage {
         }).start();
     }
 
+    /**
+     * displays "Game Over" and the option to restart, restarting the game if prompted to
+     */
     public void showGameOver() {
         Platform.runLater(new Runnable() {
             @Override
@@ -103,7 +118,9 @@ public class ShowMessage {
         });
     }
 
-    //shows a win label
+    /**
+     * shows a win label
+     */
     public void showWin() {
         Platform.runLater(new Runnable() {
             @Override

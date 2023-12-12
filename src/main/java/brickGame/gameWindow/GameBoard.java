@@ -9,6 +9,9 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
+/**
+ * objects of this class implements OnAction and EventHandler<KeyEvent>
+ */
 public class GameBoard implements EventHandler<KeyEvent>, OnAction {
     private static BoardController boardController;
     private PaddleController paddleController;
@@ -34,10 +37,16 @@ public class GameBoard implements EventHandler<KeyEvent>, OnAction {
     private static final int RIGHT = 2;
 
 
+    /**
+     * default constructor
+     */
     public GameBoard() {
     }
 
-    //Handles keyboard events
+    /**
+     * handles keyboard events
+     * @param event keyboard press
+     */
     //Main thread (UI)
     @Override
     public void handle(KeyEvent event) {
@@ -55,6 +64,9 @@ public class GameBoard implements EventHandler<KeyEvent>, OnAction {
         }
     }
 
+    /**
+     * Checks if all the blocks in a board are destroyed
+     */
     //Check if all blocks are destroyed
     public void checkDestroyedCount() {
         if (boardController.getDestroyedBlockCount() == boardController.getBlocks().size()) {
@@ -62,8 +74,10 @@ public class GameBoard implements EventHandler<KeyEvent>, OnAction {
         }
     }
 
+    /**
+     * updates the visual representation of the game, handling collisions, and responding to events
+     */
     @Override
-    //updates the visual representation of the game, handling collisions, and responding to events
     public void onUpdate() {
         Platform.runLater(new Runnable() {
             @Override
@@ -71,12 +85,6 @@ public class GameBoard implements EventHandler<KeyEvent>, OnAction {
 
                 GraphicsMain.scoreLabel.setText("Score: " + boardController.getScore());
                 GraphicsMain.heartLabel.setText("Heart : " + boardController.getHeart());
-
-//                rect.setX(xPaddle);
-//                rect.setY(yPaddle);
-//                //Sets the visual position of the ball based on the current values of x and y Ball
-//                ball.setCenterX(xBall);
-//                ball.setCenterY(yBall);
 
                 //Updates the Y-coordinate of the 'bonus' based on the elapsed time since its creation
                 //bonus is "falling"
@@ -90,12 +98,16 @@ public class GameBoard implements EventHandler<KeyEvent>, OnAction {
 //        BoardController.blockImpact();
     }
 
-    //Initialization callback
+    /**
+     * Initialization callback
+     */
     @Override
     public void onInit() {
     }
 
-    //Physics update callback
+    /**
+     * physics update callback
+     */
     @Override
     public void onPhysicsUpdate() {
         //Checks if the player has finished the level
@@ -130,8 +142,10 @@ public class GameBoard implements EventHandler<KeyEvent>, OnAction {
 
     }
 
-    //Time update callback
-    //for the class to stay in sync with the overall game time
+    /**
+     * time update callback for the class to stay in sync with the overall game time
+     * @param time time
+     */
     @Override
     public void onTime(long time) {
         GraphicsMain.time = time;

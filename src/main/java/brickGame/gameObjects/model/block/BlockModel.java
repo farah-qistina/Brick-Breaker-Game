@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import java.util.Random;
 
 /**
- * Class that stores data for BallController
+ * Class that stores data for BlockController
  */
 public class BlockModel {
     protected static Random rnd;
@@ -18,6 +18,13 @@ public class BlockModel {
     private boolean broken;
     private Image img;
 
+    /**
+     * default constructor to initialize the default value for the block
+     * @param name name of the block
+     * @param xBlock top left x coordinate of the block
+     * @param yBlock top left y coordinate of the block
+     * @param img image of the block
+     */
     //block initialization
     public BlockModel(String name, double xBlock, double yBlock,Image img) {
 
@@ -28,19 +35,9 @@ public class BlockModel {
         this.xBlock = xBlock;
         this.yBlock = yBlock;
         this.img = img;
-//        this.row = row;
-//        this.column = column;
-//        this.color = color;
-//        this.type = type;
-//
-//        draw();
     }
-//    //static member as a dummy block
-//    private static Block block = new Block(-1, -1, Color.TRANSPARENT, 99);
-//
-//    //first of both is 0
-//    public int row;
-//    public int column;
+
+    //setter and getter methods
 
     public void setX(double x) {this.xBlock = x;}
     public double getX() {return xBlock;}

@@ -7,6 +7,9 @@ import brickGame.gameObjects.model.ball.BallFactory;
 
 import java.util.ArrayList;
 
+/**
+ * Class that stores data for BoardController
+ */
 public class BoardModel {
     private ArrayList<BlockController> blocks;
     private int destroyedBlockCount;
@@ -18,10 +21,15 @@ public class BoardModel {
 
     private BallFactory ballFactory;
 
+    /**
+     * default constructor to initialize the default value for the board
+     */
     public BoardModel() {
         heart = 3;
         score = 0;
     }
+
+    //setter and getter methods
 
     /**
      * Setter to set the ball object

@@ -7,6 +7,9 @@ import brickGame.gameObjects.view.PaddleView;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * class for the paddle object
+ */
 public class PaddleController implements Playable {
 
     private Rectangle paddleFace;
@@ -18,18 +21,30 @@ public class PaddleController implements Playable {
     private static final int LEFT  = 1;
     private static final int RIGHT = 2;
 
+    /**
+     * default constructor
+     */
     private PaddleController() {
 
         // Prints error message
         System.out.println("Singleton Violated Error: Second Player object should not be created!!");
     }
 
+    /**
+     * default constructor
+     * @param xPaddle top left x coordinate of the paddle
+     * @param yPaddle top left y coordinate of the paddle
+     */
     private PaddleController(double xPaddle, double yPaddle) {
         paddleModel = new PaddleModel(xPaddle, yPaddle);
         paddleFace = makePaddleFace();
         paddleView = new PaddleView();
     }
 
+    /**
+     * makes a rectangle paddle face
+     * @return the paddle face
+     */
     private Rectangle makePaddleFace() {
         Rectangle out = new Rectangle();
         out.setWidth(PaddleModel.getPaddleWidth());
@@ -39,6 +54,10 @@ public class PaddleController implements Playable {
         return out;
     }
 
+    /**
+     * Method to get the Player instance, creates a new instance if no instance is created
+     * @return the paddle
+     */
     public static PaddleController getUniquePlayer() {
         if (paddle == null) {
             paddle = new PaddleController();
@@ -46,6 +65,12 @@ public class PaddleController implements Playable {
         return paddle;
     }
 
+    /**
+     * Method to get the Player instance, creates a new instance if no instance is created
+     * @param xPaddle top left x coordinate of the paddle
+     * @param yPaddle top left y coordinate of the paddle
+     * @return the paddle
+     */
     public static PaddleController getUniquePlayer(double xPaddle, double yPaddle) {
         if (paddle == null) {
             paddle = new PaddleController(xPaddle, yPaddle);
@@ -53,6 +78,11 @@ public class PaddleController implements Playable {
         return paddle;
     }
 
+    /**
+     * find the impact direction between the ball and paddle
+     * @param ballController the ball
+     * @return impact direction
+     */
     public final ImpactDirection findImpact (BallController ballController) {
         double xPaddle = paddleFace.getX();
         double yPaddle = paddleFace.getY();
@@ -72,7 +102,10 @@ public class PaddleController implements Playable {
     }
 
 
-    //Move the paddle based on the direction parameter
+    /**
+     * horizontally moves the paddle according to the direction given
+     * @param direction move left or right
+     */
     @Override
     public void move(final int direction) {
         //Separate thread to avoid blocking the JavaFX application's main thread
@@ -112,6 +145,10 @@ public class PaddleController implements Playable {
         }).start(); //Starts the thread
     }
 
+    /**
+     * horizontally moves the paddle to a specified location
+     * @param x new x coordinate
+     */
     @Override
     public void moveTo(double x) {
         if (x >= paddleModel.getMax()) {
@@ -120,7 +157,13 @@ public class PaddleController implements Playable {
         paddleFace.setX(x);
     }
 
+    /**
+     * updates the view of the paddle
+     * @param p the paddle
+     */
     public void updateView(PaddleController p) {paddleView.drawPaddle(p);}
+
+    //setter and getter methods
 
     public Rectangle getPaddleFace() {
         return paddleFace;

@@ -1,5 +1,8 @@
 package brickGame.gameObjects.model.block;
 
+/**
+ * different impact directions
+ */
 public enum ImpactDirection {
     UP_IMPACT,
     DOWN_IMPACT,

@@ -4,7 +4,7 @@ import brickGame.gameObjects.controller.BallController;
 import javafx.scene.image.Image;
 
 /**
- * Class inherits from the Ball class
+ * GoldBall Class inherits from the Ball class
  */
 
 public class GoldBall extends BallController{
@@ -12,7 +12,7 @@ public class GoldBall extends BallController{
     private static final String ballType = "GOLD";
 
     /**
-     * Constructor to create a normal ball
+     * Constructor to create a gold ball
      *
      * @param name The type of ball
      * @param xBall The x-coordinate of the ball

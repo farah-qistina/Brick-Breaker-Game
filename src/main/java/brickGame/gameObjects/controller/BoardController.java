@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
+/**
+ * A class for the board including the ball, paddle, and blocks
+ */
 public class BoardController {
     private Random rnd;
     private ArrayList<BlockController> level;
@@ -45,6 +48,10 @@ public class BoardController {
     //Top of the paddle, 640 units from the top of the game window
     private double yPaddle = 640.0f;
 
+    /**
+     * board constructor that makes a baord depending on the level
+     * @param lvl the level
+     */
     public BoardController(int lvl) {
         levelFactory = new LevelFactory();
         ballFactory = new BallFactory();
@@ -66,18 +73,10 @@ public class BoardController {
         boardModel.setPaddle(GameBoard.getSceneWidth() + PaddleModel.getHalfPaddleWidth(), yPaddle);
     }
 
-    public void setBall(String ballType, double xBall, double yBall) {
-        boardModel.setBall(ballFactory.makeBall(ballType, xBall, yBall));
-    }
-
-    public BallController getBall() {
-        return boardModel.getBall();
-    }
-
-    public PaddleController getPaddle() {
-        return PaddleController.getUniquePlayer();
-    }
-
+    /**
+     * sets a random horizontal and vertical horizontal for a ball
+     * @param ball the ball
+     */
     private void setRandVelocity(BallController ball) {
         double vX, vY;
         do {
@@ -91,13 +90,9 @@ public class BoardController {
         ball.setvY(vY);
     }
 
-
     /**
-     * Method to find the impact made by the ball if impact made between ball and
-     * player, ball change direction if impact made between ball and wall, the
-     * amount of bricks decreases
+     * finds ball impacts with the wall, paddle, and block; the ball physics
      */
-
     //Ball physics
     public void findImpacts() {
         BallController.moveY(goDownBall);
@@ -108,8 +103,14 @@ public class BoardController {
 
         //Handle collision with the paddle
         paddleImpact();
+
+        //Handle collision with a block
+        blockImpact();
     }
 
+    /**
+     * Handles ball collisions with the paddle
+     */
     public void paddleImpact() {
         double xBall = getBall().getBallFace().getCenterX();
         double centerPaddleX = getPaddle().getCenterPaddleX();
@@ -150,6 +151,9 @@ public class BoardController {
         }
     }
 
+    /**
+     * Handles ball collisions with the blocks
+     */
     public void blockImpact() {
         double xBall = getBall().getBallFace().getCenterX();
         double yBall = getBall().getBallFace().getCenterY();
@@ -218,6 +222,9 @@ public class BoardController {
         }
     }
 
+    /**
+     * Handles ball collisions with the wall
+     */
     public void wallImpact() {
         int sceneWidth = GameBoard.getSceneWidth();
         int sceneHeight = GameBoard.getSceneHeight();
@@ -244,6 +251,22 @@ public class BoardController {
             getPaddle().moveTo((double) sceneWidth / 2 + PaddleModel.getHalfPaddleWidth());
         }
     }
+
+    //setter and getter methods
+
+    public void setBall(String ballType, double xBall, double yBall) {
+        boardModel.setBall(ballFactory.makeBall(ballType, xBall, yBall));
+    }
+
+    public BallController getBall() {
+        return boardModel.getBall();
+    }
+
+    public PaddleController getPaddle() {
+        return PaddleController.getUniquePlayer();
+    }
+
+
 
     /**
      * Getter to get the array of brick objects

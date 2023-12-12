@@ -6,6 +6,9 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.Random;
 
+/**
+ * Class that stores data for BonusController
+ */
 public class BonusModel {
     //TODO make private
     public Rectangle bonus;
@@ -18,6 +21,9 @@ public class BonusModel {
     public boolean taken = false;
     private static Image img;
 
+    /**
+     * default constructor to initialize the default value for the bonus object
+     */
     public BonusModel(double xBlock, double yBlock) {
         xBonus = (xBlock + (double) BlockModel.getBlockWidth() /2) - 15; //half of bonus
         yBonus = (yBlock + (double) BlockModel.getBlockHeight() /2) - 15; //half of bonus
@@ -28,6 +34,8 @@ public class BonusModel {
             img = new Image("bonus2.png");
         }
     }
+
+    //setter and getter methods
 
     public static int getBonusWidth() {return bonusWidth;}
     public static int getBonusHeight() {return bonusHeight;}

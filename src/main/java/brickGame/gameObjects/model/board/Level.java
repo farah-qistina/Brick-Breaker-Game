@@ -7,6 +7,9 @@ import brickGame.gameObjects.model.block.BlockType;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * creates a set of blocks for the board
+ */
 public class Level {
     private BlockFactory blockFactory;
 
@@ -16,9 +19,18 @@ public class Level {
     //padding to the left of the blocks
     public static final int paddingLeft = 50;
 
+    /**
+     * default constructor to initialize the default value for the level
+     */
     public Level() {
         blockFactory = new BlockFactory();
     }
+
+    /**
+     * method to create and array of blocks according to the level
+     * @param level level
+     * @return an array of bricks
+     */
     public ArrayList<BlockController> makeLevel(int level) {
         ArrayList<BlockController> out = new ArrayList<BlockController>();
         //i is columns

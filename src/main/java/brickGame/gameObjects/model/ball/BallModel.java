@@ -44,6 +44,8 @@ public class BallModel {
         this.name = name;
     }
 
+    //setter and getter methods
+
     public void setvX(double vX) {
         this.vX = vX;
     }

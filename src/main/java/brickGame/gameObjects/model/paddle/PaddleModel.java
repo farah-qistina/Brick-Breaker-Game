@@ -3,6 +3,9 @@ package brickGame.gameObjects.model.paddle;
 import brickGame.gameWindow.GameBoard;
 import javafx.scene.image.Image;
 
+/**
+ * Class that stores data for BonusController
+ */
 public class PaddleModel {
 
     //Paddle dimensions
@@ -20,11 +23,18 @@ public class PaddleModel {
     private final int max;
     private static final Image img = new Image("paddle.png");
 
+    /**
+     * default constructor to initialize the default value for the board
+     * @param xPaddle top left x coordinate of the paddle
+     * @param yPaddle top left y coordinate of the paddle
+     */
     public PaddleModel(double xPaddle, double yPaddle) {
         max = GameBoard.getSceneWidth() - paddleWidth;
         this.xPaddle = xPaddle;
         this.yPaddle = yPaddle;
     }
+
+    //setter and getter methods
 
     public static int getPaddleWidth() {return paddleWidth;}
     public static int getPaddleHeight() {return paddleHeight;}
