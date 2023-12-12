@@ -8,7 +8,15 @@ import javafx.scene.shape.Rectangle;
 import java.util.Random;
 
 public class BonusView {
+    /**
+     * default constructor
+     */
     public BonusView() {}
+
+    /**
+     * method to draw the bonus object
+     * @param bonus bonus object
+     */
     public void drawBonus(BonusController bonus) {
         Image img = bonus.getImage();
         bonus.getBonusFace().setFill(new ImagePattern(img));
