@@ -1,7 +1,8 @@
 package brickGame.gameWindow;
 
-
-//game logic
+/**
+ * game engine and threading logic
+ */
 public class GameEngine {
 
     //updating game state, initializing game, updating physics, tracking time
@@ -19,13 +20,16 @@ public class GameEngine {
     private Thread timeThread;
     public boolean isStopped = true;
 
-    //sets interface for handling game actions
+    /**
+     * sets interface for handling game actions
+     */
     public void setOnAction(OnAction onAction) {
         this.onAction = onAction;
     }
 
     /**
-     * @param fps set fps and we convert it to millisecond
+     * setFps set fps and convert it to millisecond
+     * @param fps fps
      */
     //TODO check logic
     //converts to duration of each frame in ms
@@ -51,12 +55,16 @@ public class GameEngine {
         updateThread.start();
     }
 
-    //calls the onInit method to initialize the game
-    //TODO check redundancy
+    /**
+     * calls the onInit method to initialize the game
+     */
     private void Initialize() {
         onAction.onInit();
     }
 
+    /**
+     * calls the onInit method to update game physics
+     */
     private synchronized void PhysicsCalculation() {
         physicsThread = new Thread(new Runnable() {
             @Override
@@ -74,6 +82,9 @@ public class GameEngine {
         physicsThread.start();
     }
 
+    /**
+     * starts the threads
+     */
     public void start() {
         time = 0;
         Initialize();
@@ -83,6 +94,9 @@ public class GameEngine {
         isStopped = false;
     }
 
+    /**
+     * stops the threads
+     */
     public void stop() {
         if (!isStopped) {
             isStopped = true;
@@ -92,6 +106,9 @@ public class GameEngine {
         }
     }
 
+    /**
+     * calls the onInit method to start the time
+     */
     private void TimeStart() {
         timeThread = new Thread(new Runnable() {
             @Override
